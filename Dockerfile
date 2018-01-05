@@ -16,6 +16,7 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*;
 
 RUN a2enconf zoneminder
+COPY apache2-foreground /usr/local/bin/
 
 EXPOSE 80
 CMD ["apache2-foreground"]
