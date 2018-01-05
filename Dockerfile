@@ -15,8 +15,10 @@ RUN set -eux; \
     rm -rf /tmp/* /var/tmp/*; \
     rm -rf /var/lib/apt/lists/*;
 
+RUN chgrp -c www-data /etc/zm/zm.conf
 RUN a2enconf zoneminder
-COPY apache2-foreground /usr/local/bin/
+
+COPY container-init /usr/local/bin/
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD ["container-init"]

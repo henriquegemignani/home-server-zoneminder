@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e
 
+
+sed -i "s/ZM_DB_HOST=localhost/ZM_DB_HOST=db/" /etc/zm/zm.conf
+sed -i "s/ZM_DB_PASS=zmpass/ZM_DB_PASS=$(cat /run/secrets/zoneminder/db-password)/" /etc/zm/zm.conf
+
+
+ZM_PATH_BIN="/usr/bin"
+ZM_RUNDIR="/var/run/zm"
+ZM_TMPDIR="/tmp/zm"
+mkdir -p "$ZM_RUNDIR" && chown www-data:www-data "$ZM_RUNDIR"
+mkdir -p "$ZM_TMPDIR" && chown www-data:www-data "$ZM_TMPDIR"
+"$ZM_PATH_BIN/zmpkg.pl" start
+
 # Note: we don't just use "apache2ctl" here because it itself is just a shell-script wrapper around apache2 which provides extra functionality like "apache2ctl start" for launching apache2 in the background.
 # (also, when run as "apache2ctl <apache args>", it does not use "exec", which leaves an undesirable resident shell process)
 
