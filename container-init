@@ -4,7 +4,7 @@ set -e
 
 sed -i "s/ZM_DB_HOST=localhost/ZM_DB_HOST=db/" /etc/zm/zm.conf
 sed -i "s/ZM_DB_PASS=zmpass/ZM_DB_PASS=$(cat /run/secrets/zoneminder/db-password)/" /etc/zm/zm.conf
-sed -i "/;date.timezone =/;date.timezone = $TIMEZONE/" /etc/php/7.0/apache2/php.ini
+sed -i "s/;date.timezone =/date.timezone = $TIMEZONE/" /etc/php/7.0/apache2/php.ini
 
 
 ZM_PATH_BIN="/usr/bin"
