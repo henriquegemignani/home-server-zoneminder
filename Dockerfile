@@ -16,6 +16,8 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*;
 
 RUN chgrp -c www-data /etc/zm/zm.conf
+RUN a2enmod cgi
+RUN a2enmod rewrite
 RUN a2enconf zoneminder
 
 COPY container-init /usr/local/bin/
